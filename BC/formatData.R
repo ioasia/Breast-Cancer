@@ -4,7 +4,7 @@ library(easypackages)
 
 source("http://bioconductor.org/biocLite.R")
 toInstallBio <- c("impute", "preprocessCore", "GO.db", "biomaRt","GenomicRanges","CGHregions")
-toInstallBio <- c("impute", "preprocessCore", "GO.db", "biomaRt","GenomicRanges","CGHregions")
+
 source("http://bioconductor.org/biocLite.R")
 biocLite(toInstallBio)
 

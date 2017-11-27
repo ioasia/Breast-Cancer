@@ -2,18 +2,14 @@
 install.packages("easypackages")
 library(easypackages)
 
-<<<<<<< HEAD
 source("http://bioconductor.org/biocLite.R")
 toInstallBio <- c("impute", "preprocessCore", "GO.db", "biomaRt","GenomicRanges","CGHregions")
-=======
 toInstallBio <- c("impute", "preprocessCore", "GO.db", "biomaRt","GenomicRanges","CGHregions")
 source("http://bioconductor.org/biocLite.R")
->>>>>>> 99308bafc815eef8a2f186124610d5c4f85e21e5
 biocLite(toInstallBio)
 
 toInstall=c("R6","stringi","reshape", "WGCNA","readxl",'rJava', 'xlsxjars',"xlsx","matrixStats","data.table", "beeswarm","dplyr", "plyr", "ggthemes", "perm",
             "cowplot","ggrepel","tibble", "reshape2","ggplot2","doParallel","ggrepel", "lmPerm","DescTools",
-<<<<<<< HEAD
             'lsr',"coin","gsubfn","gridExtra","VennDiagram", 'gsubfn', 'venneuler', 'ggsignif', 'scales')
 packages(toInstall)
 
@@ -42,7 +38,6 @@ colnames(prot) = newcolnames
 
 # mRNA data
 mrna = read.table(paste0(filefolder, "main_qnorm_missimp_cent-hosp_log2_annot_updated_ids_to_Janne_updated.txt"), 
-=======
             'lsr',"coin","gsubfn","gridExtra","VennDiagram", 'gsubfn', 'venneuler')
 packages(toInstall)
 
@@ -111,13 +106,10 @@ colnames(prot_data) =  gsub("-",".",colnames(prot_data))
 # MRNA ADATA
 ############
 # Read the original RNA data from Kristine Kleivi in Oslo
-rna_data = read.table(paste0(filefolder, "main_qnorm_missimp_cent-hosp_log2_annot_updated_ids_to_Janne_updated.txt"), 
->>>>>>> 99308bafc815eef8a2f186124610d5c4f85e21e5
-                      header=TRUE, 
+rna_data = read.table(paste0(filefolder, "main_qnorm_missimp_cent-hosp_log2_annot_updated_ids_to_Janne_updated.txt"),                      header=TRUE, 
                       sep="\t", 
                       stringsAsFactors=FALSE)
 
-<<<<<<< HEAD
 # Correct erroneous value jan.27 with 1.3527
 mrna$OSL2U.0383T1[mrna$ProbeUID.SampleArray.gDetrendedSignal == "12629"] = 1.3527
 mrna$OSL2U.0383T1 = as.double(mrna$OSL2U.0383T1)
@@ -136,7 +128,6 @@ mrna$GeneName = NULL
 mrna = as.matrix(mrna)
 
 # Metadata
-=======
 # Correct erroneous value jan.27 with 1.3527 as per Miriam email
 # Notice that this error caused the col to be coerced to factor and we need to
 # convert back to double
@@ -164,7 +155,6 @@ rna_data = as.matrix(rna_data)
 
 # META DATA
 ###########
->>>>>>> 99308bafc815eef8a2f186124610d5c4f85e21e5
 # Read in the tumour meta data, i.e., PAM50 classification of the tumours
 meta_tumours <- readArrayFromExcel(paste0(filefolder, "clin_info_connect_proteomics.xlsx"),
                                    row.name.col= "OSL2_full_name")
@@ -185,7 +175,6 @@ rownames(meta_data) <- meta_data$OSL2.full.name
 
 # Read in the gene meta data, i.e., a list of PAM50/IntCl genes
 pam50 = readListFromExcel(paste0(filefolder,"PAM50_and_Polyak_Cell_Snapshot-gene_lists.xlsx"))
-<<<<<<< HEAD
 # intCl1000 <- read.table(paste0(filefolder, "intCl1000.txt"))
 # intCl1000 <- as.character(unique(intCl1000$V1))
 intCl754 <- unique(read.table(paste0(filefolder,"short_IntCl_genes.txt")))
@@ -220,7 +209,7 @@ cna_tot_probes = cna_Absolute_number_Samples[ ,tumours]
 # Load ploidy file
 ploidy = read.table(paste0(filefolder, "OSL2_n331_ploidy_t.perc.txt"), sep = "\t", header = TRUE)
 
-=======
+
 head(pam50, 5)
 intCl1000 <- read.table(paste0(filefolder, "intCl1000.txt"))
 intCl1000 <- as.character(unique(intCl1000$V1))
@@ -338,27 +327,22 @@ binarize.copy.number <- function(cna) {
   res = t(res)
   return(res)
 }
->>>>>>> 99308bafc815eef8a2f186124610d5c4f85e21e5
 
 # Binary CNA data
 cna_Binary_Samples <- binarize.copy.number(cna_Absolute_number_Samples)
 rownames(cna_Binary_Samples) <- cna_Absolute_number_Samples$probes
 
-<<<<<<< HEAD
-=======
 count.gain.loss <- function(x) {
   gains <- apply(x,1, function(i) sum(i==1))
   losses <- apply(x,1, function(i) sum(i==-1))
   list(gains = gains, losses = losses)
 }
 
->>>>>>> 99308bafc815eef8a2f186124610d5c4f85e21e5
 gains <- count.gain.loss(cna_Binary_Samples)$gains
 losses <- -count.gain.loss(cna_Binary_Samples)$losses
 
 cna_Binary_Samples_Augmented <- cbind(cna_Absolute_number_Samples[,c("probes","gene","chr","start","stop")], gains=gains, losses=losses)
 
-<<<<<<< HEAD
 
 ## Get genomic position for probes
 # ChrLengths
@@ -374,10 +358,8 @@ chrlengths$end=cumsum(chrlengths$total.length)
 chrlengths$start=0
 chrlengths$start[2:24]=chrlengths$end[1:23]
 
-=======
 # Get genomic position for probes
 source("chrLength.R")
->>>>>>> 99308bafc815eef8a2f186124610d5c4f85e21e5
 
 cna_Binary_Samples_Augmented$pos <- as.integer(cna_Binary_Samples_Augmented$start) + chrlengths$start[as.integer(cna_Binary_Samples_Augmented$chr)]
 
@@ -388,7 +370,6 @@ setSubtypes = typ$Category[match(tumours,typ$Id)]
 names(setSubtypes) <- tumours
 molecular_subtype = unique(setSubtypes)
 
-<<<<<<< HEAD
 
 # Common genes (include cna_log also)
 rownames(prot)[grepl("\\.", rownames(prot))] = gsub("\\.","-",rownames(prot)[grepl("\\.", rownames(prot))])
@@ -412,7 +393,6 @@ cna_bin <- binarize.copy.number(cna_tot)
 mrna <- mrna[genes,tumours]
 prot <- prot[genes,tumours]
 
-=======
 # Common genes (include cna_log also)
 rownames(exprdata$protexpr)[grepl("\\.", rownames(exprdata$protexpr))] = gsub("\\.","-",rownames(exprdata$protexpr)[grepl("\\.", rownames(exprdata$protexpr))])
 genes = intersect(intersect(intersect(rownames(exprdata$protexpr),
@@ -438,7 +418,6 @@ cna_bin <- binarize.copy.number(cna_tot)
 
 mrna <- exprdata$rnaexpr[genes,tumours]
 prot <- exprdata$protexpr[genes,tumours]
->>>>>>> 99308bafc815eef8a2f186124610d5c4f85e21e5
 
 # PAM50 colours
 PAM50cols <- c('Basal' = '#E31A1C', 'Her2'='#FB9A99','LumA'='#1F78B4','LumB'='#A6CEE3','Normal'='#33A02C')
@@ -453,7 +432,6 @@ setICluster <- meta_data$iCluster[match(tumours, meta_data$OSL2.full.name)]
 names(setICluster) <- tumours
 colour_IntCl <- as.character(revalue(setICluster, IntCLcols))
 
-<<<<<<< HEAD
 
 ## Define ESR status with logistic regression
 estr_status <- meta_data[tumours, "ER"]
@@ -471,11 +449,10 @@ estr_status[id_To_Predict] <- 1
 # Estrogen receptor residual matrices
 mrna_res <- compute.residual.matrix (mrna,"ESR_binary")
 prot_res <- compute.residual.matrix (prot,"ESR_binary")
-=======
+
 # meta_data$iCluster
 ## Impute cna_lod -Infs with the minimum values
 id_row <- which(apply(cna_log,1,min)=="-Inf")
 cna_log[cna_log=="-Inf"] = Inf
 cna_log[cna_log=="Inf"] = apply(cna_log[id_row,],1,min)
->>>>>>> 99308bafc815eef8a2f186124610d5c4f85e21e5
 #----------------------------------------------------------------------------------------------------

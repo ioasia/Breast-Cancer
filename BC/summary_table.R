@@ -19,23 +19,6 @@ levelName <- ifelse(level==1, "Gains",
                     ifelse(level==-1,"Losses","Amplifications")) 
 
 
-generate.final.table <- function(level) {
-  dat_mRNA <- manhat.matrix(data1 = omicsType1, data2 = omicsType2, molecular_view="mRNA", level)
-  dat_Protein <- manhat.matrix(data1 = omicsType1, data2 = omicsType2, molecular_view="Protein", level)
-
-  id <- colnames(dat_mRNA) %in% c("pvalTest","FoldChange","Effect_Size","pvalAdjusted", "foldChangeSignificant", 
-                                  "pvalAdjustedSignificant","pvalueFoldChangeSignificant", "score")
-  colnames(dat_mRNA)[id] <- paste("mRNA",colnames(dat_mRNA)[id],sep="_")
-
-  colnames(dat_Protein)[id] <- paste("Protein",colnames(dat_Protein)[id],sep="_")
-
-  dat_all <- merge(dat_mRNA, dat_Protein, by=colnames(dat_mRNA)[!id])
-  colnames(dat_all)[-c(1:6)] <- paste(colnames(dat_all)[-c(1:6)], levelName, sep="_")
-  colnames(dat_all)[1] = "genes"
-  return(dat_all)
-  # write.xlsx(dat_all, "dat_all.xlsx", row.names = FALSE, col.names = TRUE)
-}
-
 dat_all_Gains <- generate.final.table(level = 1 )
 dat_all_Losses <- generate.final.table(level = -1)
 

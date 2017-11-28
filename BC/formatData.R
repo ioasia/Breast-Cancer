@@ -4,8 +4,6 @@ library(easypackages)
 
 source("http://bioconductor.org/biocLite.R")
 toInstallBio <- c("impute", "preprocessCore", "GO.db", "biomaRt","GenomicRanges","CGHregions")
-
-source("http://bioconductor.org/biocLite.R")
 biocLite(toInstallBio)
 
 toInstall=c("R6","stringi","reshape", "WGCNA","readxl",'rJava', 'xlsxjars',"xlsx","matrixStats","data.table", "beeswarm","dplyr", "plyr", "ggthemes", "perm",

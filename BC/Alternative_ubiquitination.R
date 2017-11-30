@@ -12,10 +12,9 @@ rownames(cis_prot) <-  c("cor", "pvalue")
 attenuate <- cis_mrna["cor", ] - cis_prot["cor",] 
 
 # Cluster according to density function
-install.packages("mclust")
-library(mclust)
 
 # Model attenuation as as mixture of Gaussians
+set.seed(123)
 mixture_gaussian <- Mclust(attenuate, G = 2)
 group = as.factor(mixture_gaussian$classification)
 
@@ -104,6 +103,12 @@ grid.arrange(density_x, legend_p, p, density_y,
                                 widths  = c(4, 1),
                                 heights = c(1, 4))
 # dev.off()
+
+## Export table
+# attenuationGroupTable <- figureData[ , c('gene', 'group')]
+# attenuationGroupTable$group <- revalue(attenuationGroupTable$group, replace = c('1' = 'Low', '2' = 'High'))
+# colnames(attenuationGroupTable) <- c('Gene symbol', 'Attenuation group')
+# write.table(x = attenuationGroupTable, file = 'Protein_attenuation_group.csv', row.names = FALSE, sep = ',')
 
 
 # Load ubiquitination data
